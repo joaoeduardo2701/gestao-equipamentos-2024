@@ -1,7 +1,11 @@
-﻿namespace GestaoEquipamentos.ConsoleApp;
+﻿using System.Runtime.CompilerServices;
+
+namespace GestaoEquipamentos.ConsoleApp;
 
 internal class Program
 {
+    static Equipamentos[] equipamentos = new Equipamentos[10];
+
     static void Main(string[] args)
     {
         char opcao = 'n';
@@ -59,7 +63,9 @@ internal class Program
                             Console.Write("Fabricante: ");
                             fabricante = Console.ReadLine();
 
-                            Equipamentos equipamento = new Equipamentos(nome, precoAquisicao, numeroSerie, dataFabricacao, fabricante);
+                            Equipamentos equipamento1 = new Equipamentos(nome, precoAquisicao, numeroSerie, dataFabricacao, fabricante);
+
+                            equipamentos[0] = equipamento1;
 
                             break;
                         case '2':
@@ -92,6 +98,7 @@ internal class Program
                     Console.WriteLine();
                     break;
                 case '3':
+                    Console.WriteLine("Encerrando programa...");
                     break;
                 default:
                     MensagemOpcaoInvalida();
@@ -104,10 +111,23 @@ internal class Program
         } while (opcao != '3');
     }
 
-    private static void MensagemOpcaoInvalida()
+    static void MensagemOpcaoInvalida()
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Por favor insira uma opção válida!!!");
         Console.ForegroundColor = ConsoleColor.Gray;
+    }
+
+    static Equipamentos BuscarConta(int indiceParaRetornar)
+    {
+        for (int i = 0; i < equipamentos.Length; i++) 
+        { 
+            if (equipamentos[i] == null)
+                continue;
+
+                return equipamentos[indiceParaRetornar];
+        }
+
+        return null;
     }
 }
