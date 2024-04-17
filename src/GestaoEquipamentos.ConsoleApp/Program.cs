@@ -7,8 +7,6 @@ internal class Program
 
     static void Main(string[] args)
     {
-
-
         while (true) 
         {
             Console.Clear();
@@ -68,16 +66,8 @@ internal class Program
         switch (opcaoCadastro)
         {
             case '1': CadastrarEquipamento(); break;
-            case '2':
-                Console.WriteLine("-- Visualizar equipamentos --");
-                Console.WriteLine();
-
-                break;
-            case '3':
-                Console.WriteLine("-- Editar equipamentos --");
-                Console.WriteLine();
-
-                break;
+            case '2': VisualizarEquipamentos(); break;
+            case '3': EditarEquipamento(); break;
             case '4':
                 Console.WriteLine("-- Excluir equipamentos --");
                 Console.WriteLine();
@@ -92,6 +82,39 @@ internal class Program
                 MensagemOpcaoInvalida();
                 break;
         }
+    }
+
+    private static void EditarEquipamento()
+    {
+        Console.WriteLine("-- Editar equipamentos --");
+        Console.WriteLine();
+
+
+    }
+
+    private static void VisualizarEquipamentos()
+    {
+        Console.WriteLine("-- Visualizar equipamentos --");
+        Console.WriteLine();
+
+        Console.WriteLine(
+            "{0, -10} | {1, -15} | {2, -15} | {3, -10} | {4, -10}",
+            "Id", "Nome", "Fabricante", "Preço", "Data de fabricação"
+        );
+
+        for (int i = 0; i < equipamentos.Length; i++) 
+        {
+            Equipamentos e = equipamentos[i];
+
+            if (e == null)
+                continue;
+
+            Console.WriteLine(
+                "{0, -10} | {1, -15} | {2, -15} | {3, -10} | {4, -10}",
+                e.Nome, e.Fabricante, e.PrecoAquisicao, e.DataFabricacao
+                );
+        }
+        Console.ReadLine();
     }
 
     private static void CadastrarEquipamento()
@@ -117,13 +140,18 @@ internal class Program
         Equipamentos equipamento = new Equipamentos(nome, precoAquisicao, numeroSerie, dataFabricacao, fabricante);
 
         equipamentos[contadorEquipamentosCadastrados++] = equipamento;
+
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Equipamento cadastrado com sucesso!!!");
+        Console.ResetColor();
     }
 
     static void MensagemOpcaoInvalida()
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Por favor insira uma opção válida!!!");
-        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.ResetColor();
     }
 
     static Equipamentos BuscarConta(int numeroConta)
