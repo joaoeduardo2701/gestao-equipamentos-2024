@@ -2,19 +2,19 @@
 internal class Equipamentos
 {
     public string Nome;
-    public double PrecoAquisicao;
+    public decimal PrecoAquisicao;
     public string NumeroSerie;
-    public string DataFabricacao;
+    public DateTime DataFabricacao;
     public string Fabricante;
+    public int Id;
 
-    public Equipamentos(string nome, double precoAquisicao, string numeroSerie, string dataFabricacao, string fabricante)
+    public Equipamentos(string nome, decimal precoAquisicao, string numeroSerie, DateTime dataFabricacao, string fabricante)
     {
+        Id = GeradorIds.GeradorNovoIdEquipamento();
         Nome = nome;
         PrecoAquisicao = precoAquisicao;
         NumeroSerie = numeroSerie;
         DataFabricacao = dataFabricacao;
         Fabricante = fabricante;
     }
-
-
 }
