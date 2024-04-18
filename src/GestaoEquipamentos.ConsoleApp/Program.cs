@@ -7,8 +7,7 @@ internal class Program
 
     static void Main(string[] args)
     {
-        equipamentos[contadorEquipamentosCadastrados++] =
-            new Equipamento("Notebook", "AEX-120", "Acer", 2000.00m, DateTime.Now);
+        // equipamentos[contadorEquipamentosCadastrados++] = new Equipamento("Notebook", "AEX-120", "Acer", 2000.00m, DateTime.Now);
 
         bool opcaoSairEscolhida = false;
 
@@ -45,13 +44,7 @@ internal class Program
 
     static void GerenciarEquipamentos()
     {
-        Console.Clear();
-
-        Console.WriteLine("----------------------------------------");
-        Console.WriteLine("|        Gestão de Equipamentos        |");
-        Console.WriteLine("----------------------------------------");
-
-        Console.WriteLine();
+        Cabecario();
 
         Console.WriteLine("1 - Cadastrar Equipamento");
         Console.WriteLine("2 - Editar Equipamento");
@@ -69,7 +62,7 @@ internal class Program
         {
             case '1': CadastrarEquipamento(); break;
             case '2': EditarEquipamento(); break;
-            case '3': break;
+            case '3': ExcluirEquipamento(); break;
             case '4': VisualizarEquipamentos(true); break;
 
             default: break;
@@ -78,18 +71,19 @@ internal class Program
         Console.ReadLine();
     }
 
-    private static void CadastrarEquipamento()
+    private static void ExcluirEquipamento()
     {
-        Console.Clear();
-
-        Console.WriteLine("----------------------------------------");
-        Console.WriteLine("|        Gestão de Equipamentos        |");
-        Console.WriteLine("----------------------------------------");
-
+        Cabecario();
+        Console.WriteLine("Excluindo equipamento... ");
         Console.WriteLine();
 
-        Console.WriteLine("Cadastrando Equipamento...");
 
+    }
+
+    private static void CadastrarEquipamento()
+    {
+        Cabecario();
+        Console.WriteLine("Cadastrando equipamento...");
         Console.WriteLine();
 
         Console.Write("Digite o nome do equipamento: ");
@@ -122,18 +116,23 @@ internal class Program
         Console.ReadLine();
     }
 
+    private static void Cabecario()
+    {
+        Console.Clear();
+
+        Console.WriteLine("----------------------------------------");
+        Console.WriteLine("|        Gestão de Equipamentos        |");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+    }
+
     static void VisualizarEquipamentos(bool exibirTitulo)
     {
 
         if (exibirTitulo)
         {
-            Console.Clear();
-
-            Console.WriteLine("----------------------------------------");
-            Console.WriteLine("|        Gestão de Equipamentos        |");
-            Console.WriteLine("----------------------------------------");
-
-            Console.WriteLine();
+            Cabecario();
 
             Console.WriteLine("Visualizando Equipamentos...");
         }
@@ -164,13 +163,7 @@ internal class Program
 
     public static void EditarEquipamento()
     {
-        Console.Clear();
-
-        Console.WriteLine("----------------------------------------");
-        Console.WriteLine("|        Gestão de Equipamentos        |");
-        Console.WriteLine("----------------------------------------");
-
-        Console.WriteLine();
+        Cabecario();
 
         Console.WriteLine("Editando Equipamento...");
 
