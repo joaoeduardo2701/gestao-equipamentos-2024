@@ -1,10 +1,11 @@
 ﻿namespace GestaoEquipamentos.ConsoleApp;
-static class GeradorIds
-{
-    private static int ContadorEquipamentosCadastrados = 0;
 
-    public static int GeradorNovoIdEquipamento()
+public static class GeradorId
+{
+    private static int IdEquipamentos = 0;
+
+    public static int GerarIdEquipamento()
     {
-        return ++ContadorEquipamentosCadastrados;
+        return ++IdEquipamentos;
     }
 }

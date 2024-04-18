@@ -2,169 +2,233 @@
 
 internal class Program
 {
-    static Equipamentos[] equipamentos = new Equipamentos[100];
+    static Equipamento[] equipamentos = new Equipamento[100];
     static int contadorEquipamentosCadastrados = 0;
 
     static void Main(string[] args)
     {
-        while (true) 
+        equipamentos[contadorEquipamentosCadastrados++] =
+            new Equipamento("Notebook", "AEX-120", "Acer", 2000.00m, DateTime.Now);
+
+        bool opcaoSairEscolhida = false;
+
+        while (!opcaoSairEscolhida)
         {
             Console.Clear();
 
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine("|          Gestão de equipamentos        |");
-            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("|        Gestão de Equipamentos        |");
+            Console.WriteLine("----------------------------------------");
+
             Console.WriteLine();
-            Console.WriteLine("1 - Cadastro de equipamentos ");
-            Console.WriteLine("2 - Controle de chamados [Não Disponível]");
-            Console.WriteLine("3 - Sair");
-                
-            Console.Write("-> ");
 
-            char opcao = char.Parse(Console.ReadLine());
+            Console.WriteLine("1 - Gerência de Equipamentos");
+            Console.WriteLine("2 - Controle de Chamados [Não Disponível]");
+            Console.WriteLine("S - Sair");
 
-            Console.Clear();
+            Console.WriteLine();
 
-            switch (opcao)
+            Console.Write("Escolha uma das opções: ");
+            char opcaoEscolhida = Console.ReadLine()[0];
+
+            switch (opcaoEscolhida)
             {
-                case '1':
-                    GerenciamentoEquipamentos();
-                    break;
-                case '2':
-                    Console.WriteLine("-- Controle de chamados --");
-                    Console.WriteLine();
-                    break;
-                case '3':
-                    Console.WriteLine("Encerrando programa...");
-                    return;
-                default:
-                    MensagemOpcaoInvalida();
-                    break;
+                case '1': GerenciarEquipamentos(); break;
+                case '2': GerenciarChamados(); break;
+
+                default: opcaoSairEscolhida = true; break;
             }
+        }
 
-            Console.WriteLine("Digite enter para continuar...");
-            Console.ReadKey();
-
-        } 
+        Console.ReadLine();
     }
 
-    private static void GerenciamentoEquipamentos()
+    static void GerenciarEquipamentos()
     {
-        char opcaoCadastro;
-        Console.WriteLine("-- Cadastro de equipamentos --");
+        Console.Clear();
+
+        Console.WriteLine("----------------------------------------");
+        Console.WriteLine("|        Gestão de Equipamentos        |");
+        Console.WriteLine("----------------------------------------");
+
         Console.WriteLine();
 
-        Console.WriteLine("1 - Inserir um novo equipamentos");
-        Console.WriteLine("2 - Visualizar equipamentos");
-        Console.WriteLine("3 - Editar equipamentos");
-        Console.WriteLine("4 - Excluir equipamentos");
-        Console.WriteLine("5 - Sair");
-        Console.Write("-> ");
+        Console.WriteLine("1 - Cadastrar Equipamento");
+        Console.WriteLine("2 - Editar Equipamento");
+        Console.WriteLine("3 - Excluir Equipamento");
+        Console.WriteLine("4 - Visualizar Equipamentos");
 
-        opcaoCadastro = char.Parse(Console.ReadLine());
+        Console.WriteLine("S - Voltar");
 
-        switch (opcaoCadastro)
+        Console.WriteLine();
+
+        Console.Write("Escolha uma das opções: ");
+        char operacaoEscolhida = Convert.ToChar(Console.ReadLine());
+
+        switch (operacaoEscolhida)
         {
             case '1': CadastrarEquipamento(); break;
-            case '2': VisualizarEquipamentos(); break;
-            case '3': EditarEquipamento(); break;
-            case '4':
-                Console.WriteLine("-- Excluir equipamentos --");
-                Console.WriteLine();
+            case '2': EditarEquipamento(); break;
+            case '3': break;
+            case '4': VisualizarEquipamentos(true); break;
 
-                break;
-            case '5':
-                Console.WriteLine("Voltando para o menu...");
-                Console.WriteLine();
-
-                break;
-            default:
-                MensagemOpcaoInvalida();
-                break;
+            default: break;
         }
+
+        Console.ReadLine();
     }
 
-    private static void EditarEquipamento()
+    private static void CadastrarEquipamento()
     {
-        Console.WriteLine("-- Editar equipamentos --");
+        Console.Clear();
+
+        Console.WriteLine("----------------------------------------");
+        Console.WriteLine("|        Gestão de Equipamentos        |");
+        Console.WriteLine("----------------------------------------");
+
         Console.WriteLine();
 
+        Console.WriteLine("Cadastrando Equipamento...");
 
+        Console.WriteLine();
+
+        Console.Write("Digite o nome do equipamento: ");
+        string nome = Console.ReadLine();
+
+        Console.Write("Digite o número de série do equipamento: ");
+        string numeroSerie = Console.ReadLine();
+
+        Console.Write("Digite o nome do fabricante do equipamento: ");
+        string fabricante = Console.ReadLine();
+
+        Console.Write("Digite o preço de aquisição do equipamento: R$ ");
+        decimal precoAquisicao = Convert.ToDecimal(Console.ReadLine());
+
+        Console.Write("Digite a data de fabricação do equipamento (formato: dd-MM-aaaa): ");
+        DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
+
+        Equipamento equipamento = new Equipamento(nome, numeroSerie, fabricante, precoAquisicao, dataFabricacao);
+
+        equipamentos[contadorEquipamentosCadastrados++] = equipamento;
+
+        Console.ForegroundColor = ConsoleColor.Green;
+
+        Console.WriteLine();
+
+        Console.WriteLine("O equipamento foi cadastrado com sucesso!");
+
+        Console.ResetColor();
+
+        Console.ReadLine();
     }
 
-    private static void VisualizarEquipamentos()
+    static void VisualizarEquipamentos(bool exibirTitulo)
     {
-        Console.WriteLine("-- Visualizar equipamentos --");
+
+        if (exibirTitulo)
+        {
+            Console.Clear();
+
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("|        Gestão de Equipamentos        |");
+            Console.WriteLine("----------------------------------------");
+
+            Console.WriteLine();
+
+            Console.WriteLine("Visualizando Equipamentos...");
+        }
+
         Console.WriteLine();
 
         Console.WriteLine(
             "{0, -10} | {1, -15} | {2, -15} | {3, -10} | {4, -10}",
-            "Id", "Nome", "Fabricante", "Preço", "Data de fabricação"
+            "Id", "Nome", "Fabricante", "Preço", "Data de Fabricação"
         );
 
-        for (int i = 0; i < equipamentos.Length; i++) 
+        for (int i = 0; i < equipamentos.Length; i++)
         {
-            Equipamentos e = equipamentos[i];
+            Equipamento e = equipamentos[i];
 
             if (e == null)
                 continue;
 
             Console.WriteLine(
                 "{0, -10} | {1, -15} | {2, -15} | {3, -10} | {4, -10}",
-                e.Nome, e.Fabricante, e.PrecoAquisicao, e.DataFabricacao
-                );
+                e.Id, e.Nome, e.Fabricante, e.PrecoAquisicao, e.DataFabricacao.ToShortDateString() // "17/04/2024"
+            );
         }
+
+        Console.ReadLine();
+        Console.WriteLine();
+    }
+
+    public static void EditarEquipamento()
+    {
+        Console.Clear();
+
+        Console.WriteLine("----------------------------------------");
+        Console.WriteLine("|        Gestão de Equipamentos        |");
+        Console.WriteLine("----------------------------------------");
+
+        Console.WriteLine();
+
+        Console.WriteLine("Editando Equipamento...");
+
+        Console.WriteLine();
+
+        VisualizarEquipamentos(false);
+
+        Console.Write("Digite o ID do equipamento que deseja editar: ");
+        int equipamentoEscolhido = Convert.ToInt32(Console.ReadLine());
+
+        Equipamento equipamentoEncontrado = EncontrarEquipamentoPorId(equipamentoEscolhido);
+
+        Console.WriteLine();
+
+        Console.Write("Digite o nome do equipamento: ");
+        equipamentoEncontrado.Nome = Console.ReadLine();
+
+        Console.Write("Digite o número de série do equipamento: ");
+        equipamentoEncontrado.NumeroSerie = Console.ReadLine();
+
+        Console.Write("Digite o nome do fabricante do equipamento: ");
+        equipamentoEncontrado.Fabricante = Console.ReadLine();
+
+        Console.Write("Digite o preço de aquisição do equipamento: R$ ");
+        equipamentoEncontrado.PrecoAquisicao = Convert.ToDecimal(Console.ReadLine());
+
+        Console.Write("Digite a data de fabricação do equipamento (formato: dd-MM-aaaa): ");
+        equipamentoEncontrado.DataFabricacao = Convert.ToDateTime(Console.ReadLine());
+
+        Console.ForegroundColor = ConsoleColor.Green;
+
+        Console.WriteLine();
+
+        Console.WriteLine("O equipamento foi editado com sucesso!");
+
+        Console.ResetColor();
+
         Console.ReadLine();
     }
 
-    private static void CadastrarEquipamento()
+    public static Equipamento EncontrarEquipamentoPorId(int idEscolhido)
     {
-        Console.WriteLine("-- Inserir um novo equipamentos --");
-        Console.WriteLine();
+        for (int i = 0; i < equipamentos.Length; i++)
+        {
+            Equipamento e = equipamentos[i];
 
-        Console.Write("Nome do equipamento: ");
-        string nome = Console.ReadLine();
-
-        Console.Write("Preço de aquisição: ");
-        decimal precoAquisicao = decimal.Parse(Console.ReadLine());
-
-        Console.Write("Número de série: ");
-        string numeroSerie = Console.ReadLine();
-
-        Console.Write("Data de fabricação: ");
-        DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
-
-        Console.Write("Fabricante: ");
-        string fabricante = Console.ReadLine();
-
-        Equipamentos equipamento = new Equipamentos(nome, precoAquisicao, numeroSerie, dataFabricacao, fabricante);
-
-        equipamentos[contadorEquipamentosCadastrados++] = equipamento;
-
-        Console.WriteLine();
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("Equipamento cadastrado com sucesso!!!");
-        Console.ResetColor();
-    }
-
-    static void MensagemOpcaoInvalida()
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("Por favor insira uma opção válida!!!");
-        Console.ResetColor();
-    }
-
-    static Equipamentos BuscarConta(int numeroConta)
-    {
-        for (int i = 0; i < equipamentos.Length; i++) 
-        { 
-            if (equipamentos[i] == null)
+            if (e == null)
                 continue;
 
-            if (equipamentos[i].Id == numeroConta)
-                return equipamentos[i];
+            if (e.Id == idEscolhido)
+                return e;
         }
 
         return null;
+    }
+
+    static void GerenciarChamados()
+    {
+
     }
 }
