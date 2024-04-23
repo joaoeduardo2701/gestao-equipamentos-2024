@@ -1,5 +1,4 @@
-﻿using GestaoEquipamentos.ConsoleApp.Apresentacao;
-using GestaoEquipamentos.ConsoleApp.Dominio;
+﻿using GestaoEquipamentos.ConsoleApp.ModuloEquipamento;
 
 namespace GestaoEquipamentos.ConsoleApp;
 
@@ -8,10 +7,6 @@ public class Program
     static void Main(string[] args)
     {
         TelaEquipamento telaEquipamento = new TelaEquipamento();
-
-        //Equipamento equipTest = new Equipamento("Notebook", "AEX-120", "Acer", 2000.00m, DateTime.Now);
-        //equipTest.Id = GeradorId.GerarIdEquipamento();
-        //equipamentos[contadorEquipamentosCadastrados] = equipTest;
 
         bool opcaoSairEscolhida = false;
 

@@ -1,4 +1,4 @@
-﻿namespace GestaoEquipamentos.ConsoleApp.Dominio;
+﻿namespace GestaoEquipamentos.ConsoleApp.ModuloEquipamento;
 
 public class Equipamento
 {

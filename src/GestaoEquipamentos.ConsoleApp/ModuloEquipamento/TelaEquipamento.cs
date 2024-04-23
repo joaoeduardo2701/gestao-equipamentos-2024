@@ -1,11 +1,14 @@
-﻿using GestaoEquipamentos.ConsoleApp.Apresentacao;
-using GestaoEquipamentos.ConsoleApp.Dominio;
-
-namespace GestaoEquipamentos.ConsoleApp.Apresentacao;
+﻿namespace GestaoEquipamentos.ConsoleApp.ModuloEquipamento;
 public class TelaEquipamento
 {
-    private Equipamento[] equipamentos = new Equipamento[100];
-    private int contadorEquipamentosCadastrados = 0;
+    RepositorioEquipamento repositorio = new RepositorioEquipamento();
+
+    public TelaEquipamento()
+    {
+        Equipamento equipTest = new Equipamento("Notebook", "AEX-120", "Acer", 2000.00m, DateTime.Now);
+
+        repositorio.CadastrarEquipamento(equipTest);
+    }
 
     public char ApresentarMenu()
     {
@@ -32,7 +35,7 @@ public class TelaEquipamento
     public void CadastrarEquipamento()
     {
         Cabecario();
-        Console.WriteLine("Cadastrando equipamento...");
+        Console.WriteLine("Cadastrando equipamento ...");
         Console.WriteLine();
 
         Console.Write("Digite o nome do equipamento: ");
@@ -51,14 +54,13 @@ public class TelaEquipamento
         DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
 
         Equipamento equipamento = new Equipamento(nome, numeroSerie, fabricante, precoAquisicao, dataFabricacao);
-        equipamento.Id = GeradorId.GerarIdEquipamento();
 
-        equipamentos[contadorEquipamentosCadastrados++] = equipamento;
+        repositorio.CadastrarEquipamento(equipamento);
 
         Console.WriteLine();
 
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("O equipamento foi cadastrado com sucesso!");
+        Console.WriteLine("O idEquipamentoEscolhido foi cadastrado com sucesso!");
         Console.ResetColor();
 
         Console.Write("\nPressione ENTER para continuar...");
@@ -78,7 +80,7 @@ public class TelaEquipamento
         Console.Write("\nDigite o ID do equipamento que deseja editar: ");
         int idEquipamentoEscolhido = Convert.ToInt32(Console.ReadLine());
 
-        if (!EquipamentoExiste(idEquipamentoEscolhido))
+        if (!repositorio.ExisteEquipamento(idEquipamentoEscolhido))
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("O equipamento mencionado não existe!");
@@ -89,7 +91,7 @@ public class TelaEquipamento
             return;
         }
 
-        //Equipamento equipamentoEncontrado = EncontrarEquipamentoPorId(idEquipamentoEscolhido);
+        // Equipamento equipamentoEncontrado = EncontrarEquipamentoPorId(idEquipamentoEscolhido);
 
         Console.WriteLine();
 
@@ -110,19 +112,15 @@ public class TelaEquipamento
 
         Equipamento equipamentoEditado = new Equipamento(nome, numeroSerie, fabricante, precoAquisicao, dataFabricacao);
 
-        equipamentoEditado.Id = idEquipamentoEscolhido;
+        bool conseguiuEditar = repositorio.EditarEquipamento(idEquipamentoEscolhido, equipamentoEditado);
 
-        for (int i = 0; i < equipamentos.Length; i++)
+        if (!conseguiuEditar)
         {
-            if (equipamentos[i] == null)
-            {
-                continue;
-            }
-            else if (equipamentos[i].Id == idEquipamentoEscolhido)
-            {
-                equipamentos[i] = equipamentoEditado;
-                break;
-            }
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Houve um erro durante a edição do equipamento!");
+            Console.ResetColor();
+
+            return;
         }
 
         Console.WriteLine();
@@ -144,9 +142,9 @@ public class TelaEquipamento
         VisualizarEquipamentos(false);
 
         Console.WriteLine("\nDigite o id do equipamento que deseja excluir: ");
-        int equipamento = Convert.ToInt32(Console.ReadLine());
+        int idEquipamentoEscolhido = Convert.ToInt32(Console.ReadLine());
 
-        if (!EquipamentoExiste(equipamento))
+        if (!repositorio.ExisteEquipamento(idEquipamentoEscolhido))
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("O equipamento mencionado não existe!");
@@ -157,19 +155,19 @@ public class TelaEquipamento
             return;
         }
 
-        for (int i = 0; i < equipamentos.Length; i++)
+        bool conseguiuExcluir = repositorio.ExcluirEquipamento(idEquipamentoEscolhido);
+
+        if (!conseguiuExcluir)
         {
-            if (equipamentos[i] == null)
-            {
-                continue;
-            }
-            else if (equipamentos[i].Id == equipamento)
-            {
-                equipamentos[i] = null;
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\nEquipamento excluido com sucesso!");
-                Console.ResetColor();
-            }
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Houve um erro a excluir o equipamento!");
+            Console.ResetColor();
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\nEquipamento excluido com sucesso!");
+            Console.ResetColor();
         }
 
         Console.Write("\nPressione ENTER para continuar...");
@@ -192,9 +190,11 @@ public class TelaEquipamento
             "Id", "Nome", "Fabricante", "Preço", "Data de Fabricação"
         );
 
-        for (int i = 0; i < equipamentos.Length; i++)
+        Equipamento[] equipamentosCadastrados = repositorio.SelecionarEquipamento();
+
+        for (int i = 0; i < equipamentosCadastrados.Length; i++)
         {
-            Equipamento e = equipamentos[i];
+            Equipamento e = equipamentosCadastrados[i];
 
             if (e == null)
                 continue;
@@ -218,23 +218,5 @@ public class TelaEquipamento
         Console.WriteLine("----------------------------------------");
 
         Console.WriteLine();
-    }
-
-    private bool EquipamentoExiste(int id)
-    {
-        for (int i = 0; i < equipamentos.Length; i++)
-        {
-            Equipamento e = equipamentos[i];
-
-            if (e == null)
-            {
-                continue;
-            }
-            else if (e.Id == id)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }
