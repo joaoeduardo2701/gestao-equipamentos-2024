@@ -1,5 +1,7 @@
-﻿namespace GestaoEquipamentos.ConsoleApp.ModuloEquipamento;
-public class TelaEquipamento
+﻿using GestaoEquipamentos.ConsoleApp.Compartilhado;
+
+namespace GestaoEquipamentos.ConsoleApp.ModuloEquipamento;
+public class TelaEquipamento : ITelaEquipamento
 {
     RepositorioEquipamento repositorio = new RepositorioEquipamento();
 
