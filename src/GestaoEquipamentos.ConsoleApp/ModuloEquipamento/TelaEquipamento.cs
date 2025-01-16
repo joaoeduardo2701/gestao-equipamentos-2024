@@ -27,9 +27,6 @@ public class TelaEquipamento
         char operacaoEscolhida = Convert.ToChar(Console.ReadLine());
 
         return operacaoEscolhida;
-
-        Console.WriteLine("\nDigite ENTER para continuar...");
-        Console.ReadKey();
     }
 
     public void CadastrarEquipamento()

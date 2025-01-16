@@ -2,12 +2,12 @@
 
 public class Equipamento
 {
-    public int Id;
-    public string Nome;
-    public string NumeroSerie;
-    public string Fabricante;
-    public decimal PrecoAquisicao;
-    public DateTime DataFabricacao;
+    public int Id { get; set; }
+    public string Nome { get; set; }
+    public string NumeroSerie { get; set; }
+    public string Fabricante { get; set; }
+    public decimal PrecoAquisicao { get; set; }
+    public DateTime DataFabricacao { get; set; }
 
     public Equipamento(string nome, string numeroSerie, string fabricante, decimal precoAquisicao, DateTime dataFabricacao)
     {

@@ -38,9 +38,13 @@ public class Program
                         telaEquipamento.VisualizarEquipamentos(true);
                     }
                     break;
-                case '2': Console.WriteLine("Gerenciar chamados"); ; break;
-                case 'S':
-                    Console.WriteLine("Saindo do programa");
+                case '2': 
+                    Console.WriteLine("Gerenciar chamados ainda não foi implementada");
+                    Console.WriteLine("\nPressione ENTER para continuar...");
+                    Console.ReadKey();
+                    break;
+                case 'S' or 's':
+                    Console.WriteLine("Saindo do programa...");
                     opcaoSairEscolhida = true;
                     break;
 

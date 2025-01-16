@@ -1,5 +1,4 @@
 ﻿using GestaoEquipamentos.ConsoleApp.Compartilhado;
-using System.Reflection.Metadata.Ecma335;
 
 namespace GestaoEquipamentos.ConsoleApp.ModuloEquipamento;
 internal class RepositorioEquipamento
